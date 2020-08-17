@@ -348,3 +348,11 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/Miku.Core/BotConfig.json
+/Miku.Core/DBConfig.json
+/Miku.Database/Migrations
+/Miku.LanguageEditorNew.Api
+/Test
+/Test.LogBot
+/Miku.LanguageEditorNew
+/Miku.LanguageEditor
