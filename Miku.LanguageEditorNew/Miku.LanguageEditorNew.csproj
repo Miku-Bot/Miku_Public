@@ -1,0 +1,82 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+	<OutputName>Miku Language Editor</OutputName>
+	<TargetFramework>netcoreapp3.1</TargetFramework>
+    <ApplicationIcon>Assets\newMiku.ico</ApplicationIcon>
+    <AssemblyName>Miku.LanguageEditorNew</AssemblyName>
+    <Configurations>Debug;Release;TranslatorEdition;DevEdition</Configurations>
+    <Authors>Benjamin Karginski (Speyd3r#3939)</Authors>
+    <Company>Meek.Moe</Company>
+    <Copyright>@Speyd3r#3939</Copyright>
+    <PackageIcon>newMiku.png</PackageIcon>
+    <Description>The Hatsune Miku bot translation editor!</Description>
+    <StartupObject></StartupObject>
+    <Nullable>disable</Nullable>
+    <PackageId>Miku Language Editor</PackageId>
+    <Product>Miku Language Editor</Product>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DevEdition|AnyCPU'">
+    <Optimize>true</Optimize>
+    <DefineConstants>DEVEDITION</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="**\*.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <AvaloniaResource Include="**\*.xaml">
+      <SubType>Designer</SubType>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Remove="HeaderControl.xaml" />
+    <AvaloniaResource Remove="UserControls\HeaderControl.xaml" />
+    <AvaloniaResource Remove="Views\DevInsertWindow.xaml" />
+    <AvaloniaResource Remove="Views\MainHeader.xaml" />
+    <AvaloniaResource Remove="Views\UserControl1.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+	  <None Remove="HeaderControl.xaml" />
+	  <None Remove="UserControls\HeaderControl.xaml" />
+	  <None Remove="Views\DevInsertWindow.xaml" />
+	  <None Remove="Views\MainHeader.xaml" />
+	  <None Remove="Views\UserControl1.xaml" />
+	  <None Include="Assets\newMiku.png">
+	    <Pack>True</Pack>
+	    <PackagePath></PackagePath>
+	  </None>
+  </ItemGroup>
+	<ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.9.10" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.9.10" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.10" />
+  </ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Include="Views\DevInsertWindow.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Miku.Database\Miku.Database.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+    <None Update="Assets\newMiku.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+	<ItemGroup>
+	  <Page Include="HeaderControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Include="UserControls\HeaderControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Include="Views\MainHeader.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Include="Views\UserControl1.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+</Project>

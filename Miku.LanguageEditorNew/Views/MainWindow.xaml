@@ -1,0 +1,250 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:Miku.LanguageEditorNew.ViewModels;assembly=Miku.LanguageEditorNew"
+		xmlns:db="clr-namespace:Miku.Database.LanguageEntities;assembly=Miku.Database"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" 
+		d:DesignWidth="500" 
+		d:DesignHeight="500"
+		Width="500" 
+		Height="500"
+		MinWidth="500"
+		MinHeight="500"
+        x:Class="Miku.LanguageEditorNew.Views.MainWindow"
+        Icon="avares://Miku.LanguageEditorNew/Assets/newMiku.png"
+        Title="Miku Language Editor (Translator Edition)"
+		Background="#222222">
+    <Design.DataContext>
+		<vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Grid RowDefinitions="50,*,50"
+		  Margin="10">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" MinWidth="200" MaxWidth="300"></ColumnDefinition>
+			<ColumnDefinition Width="2*"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+		<Border Grid.Column="0"
+				Grid.ColumnSpan="2"
+				Grid.Row="0"
+				CornerRadius="10"
+				Background="#333333">
+			<StackPanel Orientation="Horizontal"
+						HorizontalAlignment="Center">
+				<Button  Height="25"
+						 Width="25"
+						 Margin="10,0"
+						 HorizontalAlignment="Center"
+						 VerticalAlignment="Center"
+						 Background="Transparent"
+						 BorderThickness="0"
+						 Command="{Binding OpenDevWindowCommand}">
+					<Ellipse Height="25"
+								 Width="25">
+						<Ellipse.Fill>
+							<ImageBrush Source="avares://Miku.LanguageEditorNew/Assets/newMiku.png"/>
+						</Ellipse.Fill>
+					</Ellipse>
+				</Button>
+				<TextBlock FontSize="25"
+						   HorizontalAlignment="Center"
+						   VerticalAlignment="Center" 
+						   Text="Miku Translator App" 
+						   Foreground="DarkGray"/>
+			</StackPanel>
+		</Border>
+
+		<Border Grid.Column="0"
+				Grid.Row="1"
+				Grid.RowSpan="2"
+				CornerRadius="10"
+				Margin="0,10,0,0"
+				Background="#333333">
+		<DockPanel Margin="10"
+				   LastChildFill="true">
+			<TextBlock FontWeight="SemiBold"
+					   Text="Language"
+					   Foreground="DarkGray"
+					   DockPanel.Dock="Top"/>
+			<ComboBox Margin="0,0,0,5"
+					  Height="30" 
+					  SelectedItem="{Binding SelectedLanguage}"
+					  Items="{Binding Languages, Mode=TwoWay}"
+					  BorderBrush="Black"
+					  Background="DarkGray"
+					  DockPanel.Dock="Top">
+				<ComboBox.ItemTemplate>
+					<DataTemplate DataType="db:Language">
+						<TextBlock Foreground="LightGray"
+								   Text="{Binding Code}"/>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+
+			<TextBlock Margin="0,5,0,0"
+					   FontWeight="SemiBold"
+					   Text="Property Type"
+					   Foreground="DarkGray"
+					   DockPanel.Dock="Top"/>
+			<ComboBox Margin="0,0,0,5"
+					  Height="30"
+					  SelectedItem="{Binding SelectedPropertyType}"
+					  Items="{Binding PropertyTypes}"
+					  BorderBrush="Black"
+					  Background="DarkGray"
+					  DockPanel.Dock="Top">
+				<ComboBox.ItemTemplate>
+					<DataTemplate DataType="db:PropertyType">
+						<TextBlock Foreground="Black"
+								   Text="{Binding}"/>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+			
+			<TextBlock Margin="0,5,0,0"
+					   FontWeight="SemiBold"
+					   Text="Chunk Identifier"
+					   ToolTip.Tip="Commands or system parts"
+					   Foreground="DarkGray"
+					   DockPanel.Dock="Top"/>
+			<ComboBox Margin="0,0,0,5"
+					  Height="30"
+					  SelectedItem="{Binding SelectedChunkName}"
+					  Items="{Binding ChunkNames}"
+					  BorderBrush="Black"
+					  Background="DarkGray"
+					  DockPanel.Dock="Top">
+			</ComboBox>
+		
+			<TextBlock Margin="0,5,0,0"
+					   FontWeight="SemiBold"
+					   Text="Part Identifier"
+					   ToolTip.Tip="Inner texts of a Chunk"
+					   Foreground="DarkGray"
+					   DockPanel.Dock="Top"/>
+			<ComboBox Height="30"
+					  BorderBrush="Black"
+					  Margin="0,0,0,5"
+					  SelectedItem="{Binding SelectedInnerIdentifier}"
+					  Items="{Binding InnerIdentifiers}"
+					  Background="DarkGray"
+					  DockPanel.Dock="Top">
+				<ComboBox.ItemTemplate>
+					<DataTemplate DataType="db:Chunk">
+						<TextBlock Foreground="Black"
+								   Text="{Binding InnerIdentifier}"/>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+
+			<TextBlock Text="Available Abbreviations"
+					   Margin="0,5,0,0"
+					   FontWeight="SemiBold"
+					   Foreground="DarkGray"
+					   DockPanel.Dock="Top"/>
+			<ListBox MinHeight="155"
+					 MaxHeight="900"
+					 MinWidth="180"
+					 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+					 ScrollViewer.VerticalScrollBarVisibility="Auto"
+					 Background="DarkGray"
+					 Foreground="LightGray"
+					 Items="{Binding Abbreviations}"
+					 BorderBrush="Black"
+					 DockPanel.Dock="Top"
+					 SelectedItem="{Binding SelectedAbbreviation, Mode=TwoWay}"
+					 SelectionMode="Single">
+				<ListBox.ItemTemplate>
+					<DataTemplate DataType="db:Abbreviation">
+						<StackPanel Margin="0,2.5"
+									Orientation="Vertical">
+							<TextBlock Foreground="Black"
+									   FontWeight="Bold"
+									   HorizontalAlignment="Center"
+									   Text="{Binding Name}"></TextBlock>
+							<TextBlock Foreground="Black"
+									   FontSize="10"
+									   Text="{Binding Description}"
+									   TextWrapping="Wrap"></TextBlock>
+						</StackPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+
+			</ListBox>
+		</DockPanel>
+		</Border>
+
+		<Border Grid.Column="1"
+				Grid.Row="1"
+				Margin="10,10,0,10"
+				CornerRadius="10"
+				Background="#333333">
+		<Grid RowDefinitions="30,*,30,*"
+			  Margin="10">
+			<TextBlock Grid.Row="0"
+					   Text="English Original"
+					   HorizontalAlignment="Center"
+					   VerticalAlignment="Center"
+					   Margin="0,10,0,0"
+					   Foreground="DarkGray"/>
+			<TextBox Grid.Row="1"
+					 IsReadOnly="True"
+					 Focusable="False"
+					 TextWrapping="Wrap"
+					 Background="DarkGray"
+					 Foreground="Black"
+					 FontFamily="{Binding SelectedFont}"
+					 Text="{Binding DefaultOriginalText}"/>
+		
+			<TextBlock Grid.Row="2"
+					   Text="Your Translation :)"
+					   HorizontalAlignment="Left"
+					   VerticalAlignment="Center"
+					   Foreground="DarkGray"
+					   Margin="0,10,0,0"/>
+			<ComboBox Grid.Row="2"
+					  HorizontalAlignment="Right"
+					  Height="25"
+					  VerticalAlignment="Center"
+					  Width="125"
+					  Items="{Binding Fonts}"
+					  Foreground="Black"
+					  Background="DarkGray"
+					  SelectedItem="{Binding SelectedFont}"></ComboBox>
+			<TextBox Grid.Row="3"
+					 Background="DarkGray"
+					 Foreground="Black"
+					 TextWrapping="Wrap"
+					 AcceptsReturn="True"
+					 FontFamily="{Binding SelectedFont}"
+					 Text="{Binding TranslatedText}"/>
+			
+		</Grid>
+		</Border>
+
+		<Border Grid.Column="1"
+				Grid.Row="2"
+				Background="#333333"
+				CornerRadius="10"
+				Margin="10,0,0,0">
+		<StackPanel Margin="10"
+					Orientation="Horizontal"
+					HorizontalAlignment="Center">
+
+			<Button Height="30"
+					Width="80"
+					Margin="10,0"
+					Content="Save"
+					Command="{Binding SaveCommand}"/>
+			<Button Height="30"
+					Width="80"
+					Margin="10,0"
+					Content="Refresh" 
+					Command="{Binding RefreshCommand}"/>
+			
+		</StackPanel>
+		</Border>
+	</Grid>
+
+</Window>
